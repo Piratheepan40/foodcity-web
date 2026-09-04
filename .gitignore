@@ -35,3 +35,6 @@ dev.db
 
 # Old frontend folder
 frontend/
+
+# Backend folder (standalone frontend deployment)
+backend/
