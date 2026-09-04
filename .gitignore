@@ -32,3 +32,6 @@ yarn-error.log*
 *.db
 *.db-journal
 dev.db
+
+# Old frontend folder
+frontend/
