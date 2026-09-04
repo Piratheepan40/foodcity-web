@@ -9,8 +9,8 @@ import { toast } from 'sonner';
 
 export default function LoginPage() {
   const [roleMode, setRoleMode] = useState<'ADMIN' | 'CASHIER'>('CASHIER');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('cashier@pos.com');
+  const [password, setPassword] = useState('cashier123');
   const [showPassword, setShowPassword] = useState(false);
 
   // Validation touched states
@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   // Helper validation logic
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const isPasswordValid = password.length >= 6;
+  const isPasswordValid = password.length >= 4;
 
   const emailError = emailTouched
     ? !email.trim()
@@ -39,7 +39,7 @@ export default function LoginPage() {
     ? !password
       ? 'Password is required.'
       : !isPasswordValid
-        ? 'Password must be at least 6 characters.'
+        ? 'Password must be at least 4 characters.'
         : null
     : null;
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
     setEmailTouched(true);
     setPasswordTouched(true);
 
-    if (!email.trim() || !password) {
+    if (!email.trim() || !password.trim()) {
       setError('Please fill in all required fields.');
       return;
     }
@@ -73,15 +73,10 @@ export default function LoginPage() {
       return;
     }
 
-    if (!isPasswordValid) {
-      setError('Password must be at least 6 characters long.');
-      return;
-    }
-
     try {
       setLoading(true);
       setError(null);
-      const user = await login(email.trim(), password);
+      const user = await login(email.trim(), password.trim());
       toast.success(`Welcome back, ${user.email}!`);
       if (user.role === 'ADMIN') {
         router.push('/admin/products');
